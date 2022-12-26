@@ -2,10 +2,12 @@
 
 let privateNumber = Math.floor(Math.random() * 20) + 1;
 let attempts = 20;
+let highScore = document.querySelector('.highscore').textContent;
 
 document.querySelector('.check').addEventListener('click', function () {
   document.querySelector('.score').textContent = attempts;
   const value = document.querySelector('.guess').value;
+  document.querySelector('.highscore').textContent = highScore;
 
   if (attempts > 0) {
     if (value.length == 0) {
@@ -19,6 +21,10 @@ document.querySelector('.check').addEventListener('click', function () {
         'Winner Winner Checking Dinner';
       document.querySelector('body').style.backgroundColor = 'green';
       document.querySelector('.number').textContent = privateNumber;
+      if (attempts > highScore) {
+        highScore = attempts;
+        document.querySelector('.highscore').textContent = highScore;
+      }
     } else if (value < privateNumber) {
       --attempts;
       document.querySelector('.message').textContent = 'Too height';
