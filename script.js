@@ -1,50 +1,55 @@
 'use strict';
 
+const scoreElement = document.querySelector('.score');
+const messageElement = document.querySelector('.message');
+const highScoreElement = document.querySelector('.highscore');
+const numberElement = document.querySelector('.number');
+const guessElement = document.querySelector('.guess');
+
 let privateNumber = Math.floor(Math.random() * 20) + 1;
 let attempts = 20;
-let highScore = document.querySelector('.highscore').textContent;
+let highScore = highScoreElement.textContent;
 
 document.querySelector('.check').addEventListener('click', function () {
-  document.querySelector('.score').textContent = attempts;
-  const value = document.querySelector('.guess').value;
-  document.querySelector('.highscore').textContent = highScore;
+  scoreElement.textContent = attempts;
+  highScoreElement.textContent = highScore;
+
+  const value = guessElement.value;
 
   if (attempts > 0) {
     if (value.length == 0) {
-      document.querySelector('.message').textContent =
-        'The value input is required';
+      messageElement.textContent = 'The value input is required';
     } else if (value > 20 || value <= 0) {
-      document.querySelector('.message').textContent =
+      messageElement.textContent =
         'The input value should be between 1 - 20 only';
     } else if (value == privateNumber) {
-      document.querySelector('.message').textContent =
-        'Winner Winner Checking Dinner';
+      messageElement.textContent = 'Winner Winner Checking Dinner';
       document.querySelector('body').style.backgroundColor = 'green';
-      document.querySelector('.number').textContent = privateNumber;
+      numberElement.textContent = privateNumber;
       if (attempts > highScore) {
         highScore = attempts;
-        document.querySelector('.highscore').textContent = highScore;
+        highScoreElement.textContent = highScore;
       }
     } else if (value < privateNumber) {
       --attempts;
-      document.querySelector('.message').textContent = 'Too height';
-      document.querySelector('.score').textContent = attempts;
+      messageElement.textContent = 'Too height';
+      scoreElement.textContent = attempts;
     } else if (value > privateNumber) {
       --attempts;
-      document.querySelector('.message').textContent = 'Too low';
-      document.querySelector('.score').textContent = attempts;
+      messageElement.textContent = 'Too low';
+      scoreElement.textContent = attempts;
     }
   } else {
-    document.querySelector('.message').textContent = 'You loss the game.';
+    messageElement.textContent = 'You loss the game.';
   }
 });
 
 document.querySelector('.again').addEventListener('click', function () {
   privateNumber = Math.floor(Math.random() * 20) + 1;
   attempts = 20;
-  document.querySelector('.score').textContent = attempts;
-  document.querySelector('.message').textContent = 'Start guessing ....';
+  scoreElement.textContent = attempts;
+  messageElement.textContent = 'Start guessing ....';
   document.querySelector('body').style.backgroundColor = 'black';
-  document.querySelector('.number').textContent = '?';
-  document.querySelector('.guess').value = '';
+  numberElement.textContent = '?';
+  guessElement.value = '';
 });
